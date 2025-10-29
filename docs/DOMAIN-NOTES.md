@@ -29,12 +29,18 @@
 
 ## Critical Invariants
 - **Minimum characters** - Cannot respond or create a debate with blank text
+- **Minimum Payment** - Cannot do a null payment
 
-- **Capacity enforcement** — Cannot sell more tickets than capacity  
-- **Unique QR codes** — Each ticket has exactly one unique code  
-- **Payment before ticket** — Tickets only issued after successful payment  
-- **Student verification** — Discounts only for verified university emails  
-- **Refund timeframe** — Refunds only allowed >72 hours before event  
-- **Event requirements** — Must have name, date, venue, capacity, and at least one price tier before publishing  
-- **One-time validation** — Each QR code can only be used once
+---
 
+### Entities
+
+| Entity | Why it's an Entity |
+|--------|-------------------|
+| **User** | Has unique ID, lifecycle (draft → published → open), state changes as tickets sell |
+| **Moderator** | Has unique QR code, lifecycle (reserved → paid → validated/refunded) |
+| **Donator** | Has persistent identity across multiple purchases |
+| **Debate** | Has unique ID, ongoing relationship managing multiple events |
+| **Report** | Has unique transaction ID, tracks payment lifecycle |
+| **Payment** | Has unique transaction ID, tracks payment lifecycle |
+| **Donation** | Has unique transaction ID, tracks payment lifecycle |
