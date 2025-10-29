@@ -54,12 +54,12 @@ Immutable, compared by value.
 ## Invariants
 Business rules that must always hold true.
 
-Minimum characters - Cannot respond or create a debate with blank text
-Minimum Payment - Cannot do a null payment
-Categorize report - User cannot report without specifying the category
-Review report - Report must be reviewed by a moderator before a sanction
-Mandatory login - User cannot report or post without being connected
-Payment feedback - Donation must lead to a payment result
+-Minimum characters - Cannot respond or create a debate with blank text
+-Minimum Payment - Cannot do a null payment
+-Categorize report - User cannot report without specifying the category
+-Review report - Report must be reviewed by a moderator before a sanction
+-Mandatory login - User cannot report or post without being connected
+-Payment feedback - Donation must lead to a payment result
 
 ---
 
