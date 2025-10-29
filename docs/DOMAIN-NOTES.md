@@ -54,9 +54,9 @@
 |--------------|------------------------|
 | **Money** | Compared by amount + currency, immutable, no identity |
 | **Capacity** | Just a number constraint, replaceable |
-| **PriceTier** | Configuration data, compared by values not identity |
+| **Price Tier** | Configuration data, compared by values not identity |
 | **StudentDiscount** | Discount rules, interchangeable if same percentage |
 | **TicketCode** | The data itself is immutable, identity belongs to Ticket |
 | **EventDetails** | Descriptive information, no independent identity |
-| **GoodBehaviorPolicy** | Set of rules, things users must follow |
+| **Good Behavior Policy** | Set of rules, things users must follow |
 | **PaymentStatus** | Enumeration of states, no identity |
