@@ -54,12 +54,12 @@ Immutable, compared by value.
 ## Invariants
 Business rules that must always hold true.
 
-- A **Donation** amount must be greater than `0`.
-- A **Debate** must have at least one participant.
-- A **Report** must include at least one **Report Category**.
-- A **User** must have a unique email address.
-- A **Suspicious Activity** record must be linked to a valid user.
-- A **Moderator** can only remove content from assigned debates.
+Minimum characters - Cannot respond or create a debate with blank text
+Minimum Payment - Cannot do a null payment
+Categorize report - User cannot report without specifying the category
+Review report - Report must be reviewed by a moderator before a sanction
+Mandatory login - User cannot report or post without being connected
+Payment feedback - Donation must lead to a payment result
 
 ---
 
