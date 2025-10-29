@@ -63,3 +63,21 @@
 | **ConversationData** | Represents stored discussion content; identical content means same value. |
 | **PaymentResult** | Describes transaction outcome (‘Success’, ‘Failed’, ‘Pending’), no unique ID. |
 | **EmailAddress** | Defined purely by its value; identical emails represent the same object. |
+
+## Bounded Contexts
+
+### 1. Debate Management
+**Focus:** Debate creation, participation, and moderation workflows  
+**Models:** Debate, User, Report, ModerationReason, GoodBehaviorPolicy
+
+### 2. User & Access Control
+**Focus:** User identity, authentication, and permissions  
+**Models:** User, Moderator
+
+### 3. Donation & Payment
+**Focus:** Financial transactions and donation management  
+**Models:** Donation, Donator, PaymentResult
+
+### 4. Analytics & Reporting
+**Focus:** Data aggregation and trend analysis  
+**Models:** DataReport, DataAnalyst
