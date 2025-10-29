@@ -25,14 +25,15 @@ HeDa is a digital platform for hosting and participating in public debates where
 ## Entities
 Have unique identities and lifecycles.
 
-| Entity | Description |
-|---------|--------------|
-| **User** | Registered member who creates or participates in debates. |
-| **Moderator** | Authorized user who reviews and resolves reports. |
-| **Donator** | User who contributes financially to the platform. |
-| **Debate** | Public discussion thread where users post opinions. |
-| **Report** | Complaint or moderation ticket about a debate or message. |
-| **Donation** | Financial transaction made through the external payment system. |
+| Entity | Why it's an Entity |
+|---------|--------------------|
+| **User** | Has unique ID, lifecycle (Interacting → banned → unbanned), state changes as users interact. |
+| **Moderator** | Has unique identifier, lifecycle (currently working → paid → on break). |
+| **Donator** | He is identifiable using his payment information, and is also related to donation ID. |
+| **Debate** | Has unique ID, can have many states like ‘ongoing’ / ‘empty’ (when no one but you is part of it). |
+| **Report** | Has unique ID, tracking who reported who and for what reasons. |
+| **Donation** | Has unique transaction ID, tracks payment lifecycle. |
+| **Data Report** | Has unique ID, can be currently fetching data or 'sent to data analyst'. |
 
 ---
 
