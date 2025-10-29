@@ -55,11 +55,11 @@
 
 | Value Object | Why it's a Value Object |
 |--------------|------------------------|
-| **ModerationReason** | always a different reason filed in a report (e.g, 'Physical Threats) |
+| **ReportReason** | always a different reason filed in a report (e.g, 'Physical Threats) |
 | **DonationMessage** | non essential information, always personalized |
 | **DonationAmount** | Numerical data, compared by values not identity |
 | **Good Behavior Policy** | Set of rules, things users must follow |
-| **ReportCategory** | Always a predefined reason type used in reports (e.g., 'Spam', 'Harassment'). |
+| **ModerationVerdict** | Always a custom reason given by the moderator in reports (e.g., 'Spam', 'Harassment'). |
 | **ConversationData** | Represents stored discussion content; identical content means same value. |
 | **PaymentResult** | Describes transaction outcome (‘Success’, ‘Failed’, ‘Pending’), no unique ID. |
 | **EmailAddress** | Defined purely by its value; identical emails represent the same object. |
