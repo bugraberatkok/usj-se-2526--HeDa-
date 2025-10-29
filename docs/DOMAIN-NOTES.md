@@ -44,7 +44,7 @@
 | **Moderator** | Has unique identifier, lifecycle (currently working → paid → on break) |
 | **Donator** | He is identifiable using his payment informations, He is also related to donation ID |
 | **Debate** | Has unique ID, can have many states like 'ongoing' / 'empty' (when no-one but you is part of it)|
-| **Report** | Has unique ID, tracking who reported who for which reasons |
+| **Report** | Has unique ID, tracking who reported who for what reasons |
 | **Donation** | Has unique transaction ID, tracks payment lifecycle |
 
 ### Value Objects
