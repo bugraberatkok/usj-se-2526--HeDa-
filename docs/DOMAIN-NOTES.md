@@ -55,8 +55,8 @@
 
 | Value Object | Why it's a Value Object |
 |--------------|------------------------|
-| **Money** | Compared by amount + currency, immutable, no identity |
-| **Capacity** | Just a number constraint, replaceable |
+| **ModerationReason** | always a different reason filed in a report (e.g, 'Physical Threats) |
+| **DonationMessage** | non essential information, always personalized |
 | **Price Tier** | Configuration data, compared by values not identity |
 | **StudentDiscount** | Discount rules, interchangeable if same percentage |
 | **TicketCode** | The data itself is immutable, identity belongs to Ticket |
