@@ -63,6 +63,7 @@
 | **ConversationData** | Represents stored discussion content; identical content means same value. |
 | **PaymentResult** | Describes transaction outcome (‘Success’, ‘Failed’, ‘Pending’), no unique ID. |
 | **EmailAddress** | Defined purely by its value; identical emails represent the same object. |
+| **DataAnalysisContent** | Content of the completed analysis, always different. |
 
 ## Bounded Contexts
 
