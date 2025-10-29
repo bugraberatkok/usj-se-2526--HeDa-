@@ -57,5 +57,5 @@
 | **StudentDiscount** | Discount rules, interchangeable if same percentage |
 | **TicketCode** | The data itself is immutable, identity belongs to Ticket |
 | **EventDetails** | Descriptive information, no independent identity |
-| **RefundPolicy** | Set of rules, compared by value |
+| **GoodBehaviorPolicy** | Set of rules, things users must follow |
 | **PaymentStatus** | Enumeration of states, no identity |
