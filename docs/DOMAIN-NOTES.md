@@ -6,25 +6,25 @@
 
 
 ## Key Behaviors
-**User**
+**Users**
 - Make a donation
 - Create an account
 - Login to an account
 - Create a debat
 - Respond to a debate
 
-**Students**
+**Access Control Staff / Moderators**
 - Browse events  
 - Purchase tickets with discounts  
 - Receive QR codes  
 - Request refunds
 
-**Organizers**
+**Data Analysts**
 - Create and publish events  
 - Configure pricing  
 - Monitor sales
 
-**System**
+**Donator**
 - Process payments  
 - Generate QR codes  
 - Validate entries  
