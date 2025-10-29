@@ -6,6 +6,12 @@
 
 
 ## Key Behaviors
+**User**
+- Make a donation
+- Create an account
+- Login to an account
+- Create a debat
+- Respond to a debate
 
 **Students**
 - Browse events  
