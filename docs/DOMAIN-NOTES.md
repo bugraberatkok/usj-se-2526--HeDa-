@@ -80,4 +80,4 @@
 
 ### 4. Analytics & Reporting
 **Focus:** Data aggregation and trend analysis  
-**Models:** DataReport, DataAnalyst
+**Models:** DataReport
