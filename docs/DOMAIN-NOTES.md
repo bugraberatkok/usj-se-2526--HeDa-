@@ -21,7 +21,7 @@
 - Receive data report
 - Analyze trends
 
-**Donator**
+**Donators**
 - Process payments 
 - Receive payment feedback
 
@@ -32,6 +32,9 @@
 - **Minimum Payment** - Cannot do a null payment
 
 ---
+
+
+## Entity vs Value Object
 
 ### Entities
 
@@ -44,3 +47,16 @@
 | **Report** | Has unique transaction ID, tracks payment lifecycle |
 | **Payment** | Has unique transaction ID, tracks payment lifecycle |
 | **Donation** | Has unique transaction ID, tracks payment lifecycle |
+
+### Value Objects
+
+| Value Object | Why it's a Value Object |
+|--------------|------------------------|
+| **Money** | Compared by amount + currency, immutable, no identity |
+| **Capacity** | Just a number constraint, replaceable |
+| **PriceTier** | Configuration data, compared by values not identity |
+| **StudentDiscount** | Discount rules, interchangeable if same percentage |
+| **TicketCode** | The data itself is immutable, identity belongs to Ticket |
+| **EventDetails** | Descriptive information, no independent identity |
+| **RefundPolicy** | Set of rules, compared by value |
+| **PaymentStatus** | Enumeration of states, no identity |
