@@ -40,12 +40,11 @@
 
 | Entity | Why it's an Entity |
 |--------|-------------------|
-| **User** | Has unique ID, lifecycle (draft → published → open), state changes as tickets sell |
-| **Moderator** | Has unique QR code, lifecycle (reserved → paid → validated/refunded) |
-| **Donator** | Has persistent identity across multiple purchases |
-| **Debate** | Has unique ID, ongoing relationship managing multiple events |
-| **Report** | Has unique transaction ID, tracks payment lifecycle |
-| **Payment** | Has unique transaction ID, tracks payment lifecycle |
+| **User** | Has unique ID, lifecycle (Interacting → banned → unbanned), state changes as users interact |
+| **Moderator** | Has unique identifier, lifecycle (currently working → paid → on break) |
+| **Donator** | He is identifiable using his payment informations, He is also related to donation ID |
+| **Debate** | Has unique ID, can have many states like 'ongoing' / 'empty' (when no-one but you is part of it)|
+| **Report** | Has unique ID, tracking who reported who for which reasons |
 | **Donation** | Has unique transaction ID, tracks payment lifecycle |
 
 ### Value Objects
