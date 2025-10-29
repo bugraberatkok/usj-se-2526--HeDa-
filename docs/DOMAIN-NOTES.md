@@ -7,17 +7,15 @@
 
 ## Key Behaviors
 **Users**
-- Make a donation
-- Create an account
-- Login to an account
-- Create a debat
-- Respond to a debate
+- Browse debates
+- Participate in a debate
+- Edit your account
+- Report inappropriate behaviour 
 
 **Access Control Staff / Moderators**
-- Browse events  
-- Purchase tickets with discounts  
-- Receive QR codes  
-- Request refunds
+- Modify features/codes  
+- Analyze previous conversations 
+- 
 
 **Data Analysts**
 - Create and publish events  
