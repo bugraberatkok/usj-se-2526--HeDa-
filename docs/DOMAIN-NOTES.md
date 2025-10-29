@@ -58,7 +58,7 @@
 | **ReportReason** | always a different reason filed in a report (e.g, 'Physical Threats) |
 | **DonationMessage** | non essential information, always personalized |
 | **DonationAmount** | Numerical data, compared by values not identity |
-| **Good Behavior Policy** | Set of rules, things users must follow |
+| **GoodBehaviorPolicy** | Set of rules, things users must follow |
 | **ModerationVerdict** | Always a custom reason given by the moderator in reports (e.g., 'Spam', 'Harassment'). |
 | **ConversationData** | Represents stored discussion content; identical content means same value. |
 | **PaymentResult** | Describes transaction outcome (‘Success’, ‘Failed’, ‘Pending’), no unique ID. |
