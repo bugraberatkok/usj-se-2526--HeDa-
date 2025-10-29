@@ -14,8 +14,7 @@
 
 **Access Control Staff / Moderators**
 - Modify features/codes  
-- Analyze previous conversations 
-- 
+- Review reported behaviour 
 
 **Data Analysts**
 - Create and publish events  
