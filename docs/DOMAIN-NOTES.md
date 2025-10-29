@@ -75,10 +75,10 @@
 **Focus:** User identity, authentication, and permissions  
 **Models:** User, Moderator
 
-### 3. Donation & Payment
+### 3. Donations
 **Focus:** Financial transactions and donation management  
 **Models:** Donation, Donator, PaymentResult
 
-### 4. Analytics & Reporting
+### 4. Data Analysis & Reports
 **Focus:** Data aggregation and trend analysis  
 **Models:** DataReport
