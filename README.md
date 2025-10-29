@@ -1,6 +1,4 @@
-# usj-se-2526--HeDa-Application-
-
-# HeDa - Domain Model Notes
+# HeDa - Domain Model
 
 ---
 
