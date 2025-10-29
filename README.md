@@ -1,1 +1,64 @@
 # usj-se-2526--HeDa-Application-
+
+# HeDa - Domain Model Notes
+
+---
+
+## About the Project
+HeDa (Healthy Debate App) is a digital platform that promotes respectful, public discussions on various topics.  
+Users can join or start debates, moderators can review reports, and donations help sustain the platform.
+
+---
+
+## Entities
+Have unique identities and lifecycles.
+
+| Entity | Description |
+|---------|--------------|
+| **User** | Registered member who creates or participates in debates. |
+| **Moderator** | Authorized user who reviews and resolves reports. |
+| **Donator** | User who contributes financially to the platform. |
+| **Debate** | Public discussion thread where users post opinions. |
+| **Report** | Complaint or moderation ticket about a debate or message. |
+| **Donation** | Financial transaction made through the external payment system. |
+
+---
+
+## Value Objects
+Immutable, compared by value.
+
+| Value Object | Description |
+|---------------|-------------|
+| **Report Category** | Reason or classification for a report (e.g., Spam, Harassment). |
+| **Conversation Data** | Log and metadata of debate discussions. |
+| **Payment Result** | Outcome of a donation transaction (Success, Failed, Pending). |
+| **Suspicious Activity** | Pattern detected by AI moderation system. |
+| **Donation Amount** | Monetary value of a donation. |
+
+---
+
+## Behaviours
+Business actions executed by entities.
+
+| Entity | Example Behaviours |
+|---------|--------------------|
+| **User** | Create debate, post message, report content. |
+| **Moderator** | Review report, ban user, close debate. |
+| **Donator** | Make donation, view donation history. |
+| **AI System** | Detect suspicious activity, tag users. |
+
+---
+
+## Invariants
+Business rules that must always hold true.
+
+- A **Donation** amount must be greater than `0`.
+- A **Debate** must have at least one participant.
+- A **Report** must include at least one **Report Category**.
+- A **User** must have a unique email address.
+- A **Suspicious Activity** record must be linked to a valid user.
+- A **Moderator** can only remove content from assigned debates.
+
+---
+
+Universidad San Jorge - Software Engineering
