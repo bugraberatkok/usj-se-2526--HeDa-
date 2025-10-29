@@ -14,22 +14,21 @@
 
 **Access Control Staff / Moderators**
 - Modify features/codes  
-- Review reported behaviour 
+- Review reported behaviour
+- Erase a report
 
 **Data Analysts**
-- Create and publish events  
-- Configure pricing  
-- Monitor sales
+- Receive data report
+- Analyze trends
 
 **Donator**
-- Process payments  
-- Generate QR codes  
-- Validate entries  
-- Enforce capacity limits
+- Process payments 
+- Receive payment feedback
 
 ---
 
 ## Critical Invariants
+- **Minimum characters** - Cannot respond or create a debate with blank text
 
 - **Capacity enforcement** — Cannot sell more tickets than capacity  
 - **Unique QR codes** — Each ticket has exactly one unique code  
