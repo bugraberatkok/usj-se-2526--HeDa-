@@ -1,8 +1,4 @@
 class GoodBehaviorPolicy:
-    """
-    Value Object - represents a set of rules users must follow in debates.
-    Example: 'Respect others, no hate speech, stay on topic'
-    """
     def __init__(self, rules: str):
         if not rules or not rules.strip():
             raise ValueError("Good behavior policy cannot be empty")
