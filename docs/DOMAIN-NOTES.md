@@ -49,7 +49,7 @@
 | **Debate** | Has unique ID, can have many states like 'ongoing' / 'empty' (when no-one but you is part of it)|
 | **Report** | Has unique ID, tracking who reported who for what reasons |
 | **Donation** | Has unique transaction ID, tracks payment lifecycle |
-| **Data Report** | Has unique ID, it can be currently fetching data or 'sent to data analyst' |
+| **DataReport** | Has unique ID, it can be currently fetching data or 'sent to data analyst' |
 
 ### Value Objects
 
