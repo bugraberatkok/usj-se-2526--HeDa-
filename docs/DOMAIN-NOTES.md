@@ -73,7 +73,7 @@
 
 ### 2. User & Access Control
 **Focus:** User identity, authentication, and permissions  
-**Models:** User, Moderator
+**Models:** User, Moderator, EmailAddress
 
 ### 3. Donations
 **Focus:** Financial transactions and donation management  
