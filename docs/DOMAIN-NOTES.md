@@ -69,7 +69,7 @@
 
 ### 1. Debate Management
 **Focus:** Debate creation, participation, and moderation workflows  
-**Models:** Debate, Report, Moderator, ReportReason, GoodBehaviorPolicy, ModerationVerdict
+**Models:** Debate, Report, Moderator, ReportReason, GoodBehaviorPolicy, ModerationVerdict, ConversationData
 
 ### 2. User & Access Control
 **Focus:** User identity, authentication, and permissions  
@@ -81,4 +81,4 @@
 
 ### 4. Data Analysis & Reports
 **Focus:** Data aggregation and trend analysis  
-**Models:** DataReport, DataAnalysisContent, ConversationData
+**Models:** DataReport, DataAnalysisContent
