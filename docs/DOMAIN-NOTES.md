@@ -69,11 +69,11 @@
 
 ### 1. Debate Management
 **Focus:** Debate creation, participation, and moderation workflows  
-**Models:** Debate, User, Report, ModerationReason, GoodBehaviorPolicy
+**Models:** Debate, Report, ModerationReason, GoodBehaviorPolicy
 
 ### 2. User & Access Control
 **Focus:** User identity, authentication, and permissions  
-**Models:** User, Moderator, EmailAddress
+**Models:** User, EmailAddress
 
 ### 3. Donations
 **Focus:** Financial transactions and donation management  
