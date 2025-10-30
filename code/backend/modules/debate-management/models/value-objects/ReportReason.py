@@ -1,5 +1,4 @@
 class ReportReason:
-    """Value Object - represents why a user was reported (e.g. 'Harassment', 'Spam')."""
     def __init__(self, reason: str):
         if not reason or not reason.strip():
             raise ValueError("Report reason cannot be empty")
