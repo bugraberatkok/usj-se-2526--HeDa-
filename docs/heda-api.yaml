@@ -8,7 +8,7 @@ info:
     and important supporting features (notifications, moderation, AI flags).
 
 servers:
-  - url: http://localhost:8080
+  - url: http://api.heda.com/v1
 
 tags:
   - name: Users
