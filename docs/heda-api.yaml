@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.0.4
 info:
   title: HeDa API
-  version: 1.0.0
+  version: 0.0.1
   description: >
     HeDa (Healthy Debate) HTTP API contract.
     Includes core features (users, debates, arguments, reactions, reports)
