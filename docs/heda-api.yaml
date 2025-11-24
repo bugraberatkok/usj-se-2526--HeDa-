@@ -3,9 +3,9 @@ info:
   title: HeDa API
   version: 0.0.1
   description: >
-    HeDa (Healthy Debate) HTTP API contract.
+    HeDa HTTP API contract.
     Includes core features (users, debates, arguments, reactions, reports)
-    plus important supporting features (notifications, moderation, AI flags).
+    and important supporting features (notifications, moderation, AI flags).
 
 servers:
   - url: http://localhost:8080
