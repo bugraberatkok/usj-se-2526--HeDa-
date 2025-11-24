@@ -2,6 +2,913 @@ openapi: 3.1.0
 info:
   title: HeDa API
   version: 1.0.0
+  description: >
+    HeDa (Healthy Debate) HTTP API contract.
+    Includes core features (users, debates, arguments, reactions, reports)
+    plus important supporting features (notifications, moderation, AI flags).
 
 servers:
-  - url:
+  - url: http://localhost:8080
+
+tags:
+  - name: Users
+    description: User registration and profile
+  - name: Auth
+    description: Authentication endpoints
+  - name: Debates
+    description: Debate browsing and participation
+  - name: Arguments
+    description: Posting and reacting to arguments
+  - name: Moderation
+    description: Reporting and reviewing content
+  - name: Notifications
+    description: User notifications
+
+paths:
+
+  ################################
+  # USERS & AUTH (MUST)
+  ################################
+
+  /users:
+    post:
+      summary: Create a new user account
+      description: Register a new user using email and password.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserInput'
+      responses:
+        '201':
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Email already registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/login:
+    post:
+      summary: Login with email and password
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInput'
+      responses:
+        '200':
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+  ################################
+  # DEBATES (MUST: browse, create, join)
+  ################################
+
+  /debates:
+    get:
+      summary: List debates
+      description: >
+        Browse debates, optionally filtered by topic or status.
+        By default returns active debates.
+      tags:
+        - Debates
+      parameters:
+        - name: topic
+          in: query
+          description: Filter debates by topic or tag.
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Debate status filter.
+          required: false
+          schema:
+            type: string
+            enum: [active, closed]
+            default: active
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Debate list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DebateSummary'
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Create a new debate
+      description: Create a debate opened by the authenticated user.
+      tags:
+        - Debates
+      security:
+        - HeDaAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDebateInput'
+      responses:
+        '201':
+          description: Debate created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Debate'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /debates/{debateId}:
+    get:
+      summary: Get debate details
+      tags:
+        - Debates
+      parameters:
+        - $ref: '#/components/parameters/DebateId'
+      responses:
+        '200':
+          description: Debate details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Debate'
+        '404':
+          description: Debate not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /debates/{debateId}/join:
+    post:
+      summary: Join a debate
+      description: Join a debate as a participant.
+      tags:
+        - Debates
+      security:
+        - HeDaAuth: []
+      parameters:
+        - $ref: '#/components/parameters/DebateId'
+      responses:
+        '200':
+          description: Joined debate successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Debate'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Debate not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Debate is closed or already joined
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+  ################################
+  # ARGUMENTS & REACTIONS (MUST + SHOULD)
+  ################################
+
+  /debates/{debateId}/arguments:
+    get:
+      summary: List arguments in a debate
+      tags:
+        - Arguments
+      parameters:
+        - $ref: '#/components/parameters/DebateId'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Argument list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Argument'
+        '404':
+          description: Debate not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Post a new argument in a debate
+      tags:
+        - Arguments
+      security:
+        - HeDaAuth: []
+      parameters:
+        - $ref: '#/components/parameters/DebateId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostArgumentInput'
+      responses:
+        '201':
+          description: Argument created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Argument'
+        '400':
+          description: Invalid argument
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not allowed to post in this debate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Debate not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Debate is closed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /arguments/{argumentId}/reactions:
+    post:
+      summary: React to an argument
+      description: Add or update a reaction (e.g. upvote/downvote) to an argument.
+      tags:
+        - Arguments
+      security:
+        - HeDaAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ArgumentId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReactionInput'
+      responses:
+        '200':
+          description: Reaction registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Argument'
+        '400':
+          description: Invalid reaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Argument not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Remove reaction from an argument
+      tags:
+        - Arguments
+      security:
+        - HeDaAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ArgumentId'
+      responses:
+        '204':
+          description: Reaction removed
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Argument or reaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+  ################################
+  # REPORTING & MODERATION (MUST + SHOULD)
+  ################################
+
+  /reports:
+    post:
+      summary: Report inappropriate content
+      tags:
+        - Moderation
+      security:
+        - HeDaAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportInput'
+      responses:
+        '201':
+          description: Report submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Target content not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /moderation/reports:
+    get:
+      summary: List pending reports
+      description: List reports pending review by moderators.
+      tags:
+        - Moderation
+      security:
+        - HeDaAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [pending, resolved, rejected]
+            default: pending
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Report list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Report'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not authorized (not moderator)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /moderation/reports/{reportId}/actions:
+    post:
+      summary: Take action on a report
+      description: >
+        Moderation decision for a report (resolve, reject, escalate, hide content, ban user).
+      tags:
+        - Moderation
+      security:
+        - HeDaAuth: []
+      parameters:
+        - $ref: '#/components/parameters/ReportId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModerationActionInput'
+      responses:
+        '200':
+          description: Report updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not authorized (not moderator)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Report not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /moderation/ai-flags:
+    get:
+      summary: List AI-flagged content
+      description: >
+        Content automatically flagged by AI moderation for manual review.
+      tags:
+        - Moderation
+      security:
+        - HeDaAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: AI flagged items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AIModerationFlag'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Not authorized (not moderator)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+  ################################
+  # NOTIFICATIONS (SHOULD)
+  ################################
+
+  /notifications:
+    get:
+      summary: Get user notifications
+      tags:
+        - Notifications
+      security:
+        - HeDaAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [unread, read, all]
+            default: unread
+      responses:
+        '200':
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /notifications/{notificationId}/read:
+    post:
+      summary: Mark a notification as read
+      tags:
+        - Notifications
+      security:
+        - HeDaAuth: []
+      parameters:
+        - $ref: '#/components/parameters/NotificationId'
+      responses:
+        '204':
+          description: Notification marked as read
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Notification not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+components:
+
+  securitySchemes:
+    HeDaAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Limit:
+      name: limit
+      in: query
+      description: Page size for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 10
+    DebateId:
+      name: debateId
+      in: path
+      required: true
+      description: Identifier of the debate.
+      schema:
+        type: string
+    ArgumentId:
+      name: argumentId
+      in: path
+      required: true
+      description: Identifier of the argument.
+      schema:
+        type: string
+    ReportId:
+      name: reportId
+      in: path
+      required: true
+      description: Identifier of the report.
+      schema:
+        type: string
+    NotificationId:
+      name: notificationId
+      in: path
+      required: true
+      description: Identifier of the notification.
+      schema:
+        type: string
+
+  schemas:
+
+    ################################
+    # BASIC & ERROR
+    ################################
+
+    Error:
+      type: object
+      properties:
+        type:
+          type: string
+          example: validation_error
+        title:
+          type: string
+          example: Validation failed
+        detail:
+          type: string
+          example: Email is invalid.
+      required: [type, title]
+
+    AuthToken:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        tokenType:
+          type: string
+          example: bearer
+        expiresIn:
+          type: integer
+          description: Expiration time in seconds
+      required: [accessToken, tokenType]
+
+    ################################
+    # USERS & AUTH
+    ################################
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, email, createdAt]
+
+    CreateUserInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+      required: [email, password]
+
+    LoginInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required: [email, password]
+
+    ################################
+    # DEBATES
+    ################################
+
+    DebateSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        topic:
+          type: string
+        status:
+          type: string
+          enum: [active, closed]
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, title, status, createdAt]
+
+    Debate:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        topic:
+          type: string
+        status:
+          type: string
+          enum: [active, closed]
+        participantsCount:
+          type: integer
+        argumentsCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, title, description, status, createdAt]
+
+    CreateDebateInput:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        topic:
+          type: string
+      required: [title, description]
+
+    ################################
+    # ARGUMENTS & REACTIONS
+    ################################
+
+    Argument:
+      type: object
+      properties:
+        id:
+          type: string
+        debateId:
+          type: string
+        authorId:
+          type: string
+        content:
+          type: string
+        score:
+          type: integer
+          description: Net score based on reactions.
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, debateId, authorId, content, createdAt]
+
+    PostArgumentInput:
+      type: object
+      properties:
+        content:
+          type: string
+      required: [content]
+
+    ReactionInput:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [upvote, downvote]
+      required: [type]
+
+    ################################
+    # REPORTS & MODERATION
+    ################################
+
+    Report:
+      type: object
+      properties:
+        id:
+          type: string
+        reporterId:
+          type: string
+        targetId:
+          type: string
+        targetType:
+          type: string
+          enum: [debate, argument, user]
+        reason:
+          type: string
+        status:
+          type: string
+          enum: [pending, resolved, rejected]
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, targetId, targetType, reason, status, createdAt]
+
+    ReportInput:
+      type: object
+      properties:
+        targetId:
+          type: string
+        targetType:
+          type: string
+          enum: [debate, argument, user]
+        reason:
+          type: string
+      required: [targetId, targetType, reason]
+
+    ModerationActionInput:
+      type: object
+      properties:
+        decision:
+          type: string
+          enum: [resolve, reject, escalate, hide_content, ban_user]
+        notes:
+          type: string
+      required: [decision]
+
+    AIModerationFlag:
+      type: object
+      properties:
+        id:
+          type: string
+        targetId:
+          type: string
+        targetType:
+          type: string
+          enum: [debate, argument, user]
+        score:
+          type: number
+          format: float
+        category:
+          type: string
+          description: Detected category (e.g., hate, harassment, spam).
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, targetId, targetType, score, category, createdAt]
+
+    ################################
+    # NOTIFICATIONS
+    ################################
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        type:
+          type: string
+          description: Notification type (reply, mention, system, etc.)
+        message:
+          type: string
+        read:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, userId, type, message, read, createdAt]
