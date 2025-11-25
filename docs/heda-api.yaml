@@ -6,12 +6,11 @@ info:
     Includes core features (users, debates, arguments, reactions, reports)
     and important supporting features (notifications, moderation, AI flags).
   version: 0.0.1
-
+  
 servers:
   - url: http://api.heda.com/v0.1
 
 paths:
-
   /users:
     post:
       summary: Create a new user account
@@ -43,7 +42,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /auth-login:
     post:
       summary: Login with email and password
@@ -74,7 +72,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /debates:
     get:
       summary: List debates
@@ -115,7 +112,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
     post:
       summary: Create a new debate
       description: Create a debate opened by the authenticated user.
@@ -148,7 +144,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /debates/{debateId}:
     get:
       summary: Get debate details
@@ -169,7 +164,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /debates/{debateId}/join:
     post:
       summary: Join a debate
@@ -205,7 +199,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /debates/{debateId}/arguments:
     get:
       summary: List arguments in a debate
@@ -230,7 +223,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
     post:
       summary: Post a new argument in a debate
       tags:
@@ -264,6 +256,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+##########################################
         '403':
           description: Not allowed to post in this debate
           content:
@@ -277,7 +270,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         '409':
-          description: Debate is closed
+          description: Debate closed
           content:
             application/json:
               schema:
@@ -286,13 +279,14 @@ paths:
   /arguments/{argumentId}/reactions:
     post:
       summary: React to an argument
-      description: Add or update a reaction (e.g. upvote/downvote) to an argument.
+      description: Add or update a reaction (upvote/downvote or like/dislike) to an argument.
       tags:
         - Arguments
       security:
         - HeDaAuth: []
       parameters:
         - $ref: '#/components/parameters/ArgumentId'
+#################################################
       requestBody:
         required: true
         content:
@@ -306,6 +300,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Argument'
+#################################################
         '400':
           description: Invalid reaction
           content:
@@ -324,7 +319,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
     delete:
       summary: Remove reaction from an argument
       tags:
@@ -342,18 +336,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+#################################################
         '404':
           description: Argument or reaction not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-
-  ################################
-  # REPORTING & MODERATION (MUST + SHOULD)
-  ################################
-
   /reports:
     post:
       summary: Report inappropriate content
@@ -392,7 +381,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /moderation/reports:
     get:
       summary: List pending reports
@@ -427,17 +415,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         '403':
-          description: Not authorized (not moderator)
+          description: Not authorized
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /moderation/reports/{reportId}/actions:
     post:
       summary: Take action on a report
-      description: >
-        Moderation decision for a report (resolve, reject, escalate, hide content, ban user).
+      description: >-
+        Moderation decision for a report (resolve, reject, hide content, ban user).
       tags:
         - Moderation
       security:
@@ -464,7 +451,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         '403':
-          description: Not authorized (not moderator)
+          description: Not authorized
           content:
             application/json:
               schema:
@@ -475,7 +462,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /moderation/ai-flags:
     get:
       summary: List AI-flagged content
