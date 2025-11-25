@@ -465,8 +465,8 @@ paths:
   /moderation/ai-flags:
     get:
       summary: List AI-flagged content
-      description: >
-        Content automatically flagged by AI moderation for manual review.
+      description: >-
+        Content automatically flagged by AI moderation for moderator review.
       tags:
         - Moderation
       security:
@@ -490,17 +490,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
         '403':
-          description: Not authorized (not moderator)
+          description: Not authorized
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-
-  ################################
-  # NOTIFICATIONS (SHOULD)
-  ################################
-
   /notifications:
     get:
       summary: Get user notifications
@@ -531,7 +525,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
   /notifications/{notificationId}/read:
     post:
       summary: Mark a notification as read
@@ -550,16 +543,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+#################################################
         '404':
           description: Notification not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-
+#################################################
 components:
-
   securitySchemes:
     HeDaAuth:
       type: http
@@ -612,13 +604,8 @@ components:
       description: Identifier of the notification.
       schema:
         type: string
-
+        
   schemas:
-
-    ################################
-    # BASIC & ERROR
-    ################################
-
     Error:
       type: object
       properties:
@@ -632,7 +619,6 @@ components:
           type: string
           example: Email is invalid.
       required: [type, title]
-
     AuthToken:
       type: object
       properties:
@@ -645,11 +631,6 @@ components:
           type: integer
           description: Expiration time in seconds
       required: [accessToken, tokenType]
-
-    ################################
-    # USERS & AUTH
-    ################################
-
     User:
       type: object
       properties:
@@ -662,7 +643,6 @@ components:
           type: string
           format: date-time
       required: [id, email, createdAt]
-
     CreateUserInput:
       type: object
       properties:
@@ -673,7 +653,6 @@ components:
           type: string
           minLength: 8
       required: [email, password]
-
     LoginInput:
       type: object
       properties:
@@ -683,11 +662,6 @@ components:
         password:
           type: string
       required: [email, password]
-
-    ################################
-    # DEBATES
-    ################################
-
     DebateSummary:
       type: object
       properties:
@@ -704,7 +678,6 @@ components:
           type: string
           format: date-time
       required: [id, title, status, createdAt]
-
     Debate:
       type: object
       properties:
@@ -727,7 +700,6 @@ components:
           type: string
           format: date-time
       required: [id, title, description, status, createdAt]
-
     CreateDebateInput:
       type: object
       properties:
@@ -738,11 +710,6 @@ components:
         topic:
           type: string
       required: [title, description]
-
-    ################################
-    # ARGUMENTS & REACTIONS
-    ################################
-
     Argument:
       type: object
       properties:
@@ -761,14 +728,12 @@ components:
           type: string
           format: date-time
       required: [id, debateId, authorId, content, createdAt]
-
     PostArgumentInput:
       type: object
       properties:
         content:
           type: string
       required: [content]
-
     ReactionInput:
       type: object
       properties:
@@ -776,11 +741,6 @@ components:
           type: string
           enum: [upvote, downvote]
       required: [type]
-
-    ################################
-    # REPORTS & MODERATION
-    ################################
-
     Report:
       type: object
       properties:
@@ -802,7 +762,6 @@ components:
           type: string
           format: date-time
       required: [id, targetId, targetType, reason, status, createdAt]
-
     ReportInput:
       type: object
       properties:
@@ -814,7 +773,6 @@ components:
         reason:
           type: string
       required: [targetId, targetType, reason]
-
     ModerationActionInput:
       type: object
       properties:
@@ -824,7 +782,6 @@ components:
         notes:
           type: string
       required: [decision]
-
     AIModerationFlag:
       type: object
       properties:
@@ -845,11 +802,6 @@ components:
           type: string
           format: date-time
       required: [id, targetId, targetType, score, category, createdAt]
-
-    ################################
-    # NOTIFICATIONS
-    ################################
-
     Notification:
       type: object
       properties:
