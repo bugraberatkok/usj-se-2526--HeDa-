@@ -1,34 +1,16 @@
 openapi: 3.0.4
 info:
   title: HeDa API
-  version: 0.0.1
-  description: >
-    HeDa HTTP API contract.
+  description: >-
+    HeDa HTTP API contract
     Includes core features (users, debates, arguments, reactions, reports)
     and important supporting features (notifications, moderation, AI flags).
+  version: 0.0.1
 
 servers:
-  - url: http://api.heda.com/v1
-
-tags:
-  - name: Users
-    description: User registration and profile
-  - name: Auth
-    description: Authentication endpoints
-  - name: Debates
-    description: Debate browsing and participation
-  - name: Arguments
-    description: Posting and reacting to arguments
-  - name: Moderation
-    description: Reporting and reviewing content
-  - name: Notifications
-    description: User notifications
+  - url: http://api.heda.com/v0.1
 
 paths:
-
-  ################################
-  # USERS & AUTH (MUST)
-  ################################
 
   /users:
     post:
@@ -44,7 +26,7 @@ paths:
               $ref: '#/components/schemas/CreateUserInput'
       responses:
         '201':
-          description: User successfully created
+          description: User account created
           content:
             application/json:
               schema:
@@ -62,7 +44,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /auth/login:
+  /auth-login:
     post:
       summary: Login with email and password
       tags:
@@ -93,15 +75,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-
-  ################################
-  # DEBATES (MUST: browse, create, join)
-  ################################
-
   /debates:
     get:
       summary: List debates
-      description: >
+      description: >-
         Browse debates, optionally filtered by topic or status.
         By default returns active debates.
       tags:
@@ -228,11 +205,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-
-  ################################
-  # ARGUMENTS & REACTIONS (MUST + SHOULD)
-  ################################
 
   /debates/{debateId}/arguments:
     get:
@@ -700,8 +672,6 @@ components:
         email:
           type: string
           format: email
-        displayName:
-          type: string
         createdAt:
           type: string
           format: date-time
@@ -912,3 +882,17 @@ components:
           type: string
           format: date-time
       required: [id, userId, type, message, read, createdAt]
+
+tags:
+  - name: Users
+    description: User registration and profile
+  - name: Auth
+    description: Authentication endpoints
+  - name: Debates
+    description: Debate browsing and participation
+  - name: Arguments
+    description: Posting and reacting to arguments
+  - name: Moderation
+    description: Reporting and reviewing content
+  - name: Notifications
+    description: User notifications
