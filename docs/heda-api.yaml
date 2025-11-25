@@ -256,7 +256,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-##########################################
         '403':
           description: Not allowed to post in this debate
           content:
@@ -286,7 +285,6 @@ paths:
         - HeDaAuth: []
       parameters:
         - $ref: '#/components/parameters/ArgumentId'
-#################################################
       requestBody:
         required: true
         content:
@@ -300,13 +298,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Argument'
-#################################################
-        '400':
-          description: Invalid reaction
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
         '401':
           description: Not authenticated
           content:
@@ -336,7 +327,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-#################################################
         '404':
           description: Argument or reaction not found
           content:
@@ -543,7 +533,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-#################################################
         '404':
           description: Notification not found
           content:
@@ -555,8 +544,7 @@ components:
   securitySchemes:
     HeDaAuth:
       type: http
-      scheme: bearer
-      bearerFormat: JWT
+      scheme: basic
 
   parameters:
     Page:
