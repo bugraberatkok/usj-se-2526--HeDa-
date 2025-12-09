@@ -2,11 +2,9 @@
 
 ## 1. Tech stack overview
 
-We were already decided to implement our backend in **Python** at the beginning of the semester.  
-For the HTTP framework, we chose **Flask**.  
-For testing, we chose **pytest**.
+We chose FastAPI for our backend because it is a modern, lightweight, and API-focused framework that fits the needs of our project. Since Heda is built around HTTP endpoints and data exchange rather than server-rendered pages, FastAPI’s design aligns naturally with our goals. Its use of Python type hints and Pydantic models gives us automatic validation and clean data structures, which helps maintain the correctness of our domain logic with less code. FastAPI also provides automatic interactive documentation through Swagger UI, making development, testing, and team collaboration easier. Additionally, its support for asynchronous execution offers high performance and leaves room for future scalability if we include features like real-time interactions.
 
-Our goal is to use simple but strong tools so that we can focus on our domain model and good code quality.
+For testing, we selected pytest because it offers a simple and readable syntax that reduces boilerplate compared to Python’s built-in unittest framework. This simplicity encourages writing more tests and makes them easier to maintain, which is important since our project requires a significant number of unit tests for domain models and invariants. pytest also integrates seamlessly with FastAPI, has excellent error messages, and includes useful tools like fixtures and plugins for testing asynchronous code. Together, FastAPI and pytest form a clean, efficient, and developer-friendly stack that allows us to build a reliable backend while keeping the codebase easy to understand and extend.
 
 ---
 
