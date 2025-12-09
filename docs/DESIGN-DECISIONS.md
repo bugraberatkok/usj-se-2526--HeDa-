@@ -35,3 +35,12 @@ We chose pytest for these reasons:
 - It is one of the most popular testing tools in Python.
 - It is easy to test invalid constructions and invariants in our value objects.
 - It gives clear error messages when a test fails.
+
+---
+
+## 4. AI usage (prompt)
+
+Knowing we wanted to work with Python we searched for efficient tech stack that would fulfil our goal successfully. FastAPI and pytest were answers that came back regurlarly. 
+We then decided to ask an AI tool to provide us some additional information about the potential relevance of this stack 
+
+Prompt link: https://chatgpt.com/share/69389e88-48ec-8012-bb7a-f5f8d72d0a86 
