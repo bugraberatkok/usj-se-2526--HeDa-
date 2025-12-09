@@ -8,7 +8,7 @@ For testing, we selected pytest because it offers a simple and readable syntax t
 
 ---
 
-## 2. HTTP framework: Flask
+## 2. HTTP framework: FastAPI
 
 Flask is a small and lightweight web framework for Python.  
 It helps us create HTTP endpoints in a simple way.
