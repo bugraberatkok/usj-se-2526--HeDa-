@@ -10,17 +10,17 @@ For testing, we selected pytest because it offers a simple and readable syntax t
 
 ## 2. HTTP framework: FastAPI
 
-Flask is a small and lightweight web framework for Python.  
-It helps us create HTTP endpoints in a simple way.
+FastAPI is a modern and efficient web framework for Python.
+It helps us create HTTP endpoints quickly and with built-in validation.
 
-We chose Flask for these reasons:
+We chose FastAPI for these reasons:
 
-- It is easy to learn and understand.
-- It is very popular in the Python community.
-- The documentation is clear and has many examples.
-- We already know some basic Python, so it is a natural choice.
+- It is simple to use and beginner-friendly.
+- It is very popular for building APIs in Python.
+- The documentation is clear and automatically generates API docs for us.
+- It works naturally with Python type hints, making our code cleaner.
 
-With Flask, we can quickly create routes like `GET /items` or `GET /users` and return JSON responses.
+With FastAPI, we can easily create routes like GET /debates or POST /arguments and return JSON responses with very little code.
 
 ---
 
