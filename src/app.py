@@ -8,7 +8,6 @@ from .domain import ReportReason, DebateTitle
 app = FastAPI()
 
 
-# ---- Pydantic schemas (for HTTP layer) ----
 
 class DebateResponse(BaseModel):
     id: int
@@ -27,7 +26,6 @@ class ReportResponse(BaseModel):
     reason: str
 
 
-# ---- In-memory fake data (no real DB yet) ----
 
 _FAKE_DEBATES = [
     {"id": 1, "title": "Is AI dangerous?", "participants": 12},
@@ -35,14 +33,12 @@ _FAKE_DEBATES = [
 ]
 
 
-# ---- Basic health endpoint ----
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
 
 
-# ---- Critical endpoint 1: browse debates ----
 
 @app.get("/debates", response_model=List[DebateResponse])
 def list_debates():
@@ -50,7 +46,6 @@ def list_debates():
     Allows users to browse debates.
     Uses simple in-memory data for now.
     """
-    # Domain layer: validate titles using DebateTitle value object
     validated = []
     for d in _FAKE_DEBATES:
         title_vo = DebateTitle(d["title"])
@@ -64,7 +59,6 @@ def list_debates():
     return validated
 
 
-# ---- Critical endpoint 2: report inappropriate behaviour ----
 
 @app.post("/reports", response_model=ReportResponse)
 def create_report(report: ReportRequest):
@@ -73,17 +67,12 @@ def create_report(report: ReportRequest):
     Enforces 'Categorize report' invariant:
     - User cannot report without specifying the category/reason.
     """
-    # Domain layer: validate reason using ReportReason value object
     reason_vo = ReportReason(report.reason)
 
-    # Normalde burada DB'ye kayıt vs. olur.
-    # Şimdilik sadece bir onay mesajı döndürüyoruz.
+
     return ReportResponse(
         message="Report received",
         reportedUserId=report.reportedUserId,
         reason=reason_vo.value,
     )
 
-
-# Not: FastAPI genelde uvicorn ile çalıştırılır:
-# uvicorn src.app:app --reload

@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 
 
-# ---- Value Objects ----
-
 @dataclass(frozen=True)
 class DebateTitle:
     value: str
